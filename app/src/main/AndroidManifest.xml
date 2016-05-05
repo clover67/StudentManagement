@@ -20,7 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Display" />
-        <activity android:name=".add_user"></activity>
+        <activity android:name=".add_user" />
+        <activity android:name=".ManagePage" />
+        <activity android:name=".SearchPage" />
+        <activity android:name=".AddStudent"></activity>
     </application>
 
 </manifest>

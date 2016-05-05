@@ -1,6 +1,7 @@
 package com.example.user.studentdatamanagementsystem;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,49 +20,58 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-
+     EditText editText_password;
+     EditText editText_username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //get value from interface
-        final EditText editText_password = (EditText) findViewById(R.id.editText_password);
-        final EditText editText_username = (EditText) findViewById(R.id.editText_username);
+        editText_password = (EditText) findViewById(R.id.editText_password);
+        editText_username = (EditText) findViewById(R.id.editText_username);
         final Button bLogin = (Button) findViewById(R.id.buttonLogin);
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //optional
-                final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
-                progressDialog.setMessage("Logging in...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-                //optional
-
                 //convert to string
                 final String username = editText_username.getText().toString();
                 final String password = editText_password.getText().toString();
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
+                if(validate()){
+                    //optional
+                    final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+                    progressDialog.setMessage("Logging in...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    //optional
 
-                            if (success) {
-                                String username = jsonResponse.getString("username");
-                                String password = jsonResponse.getString("password");
-                                String gender = jsonResponse.getString("gender");
-                                String email = jsonResponse.getString("email");
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
 
-                                //go to another activity
-                                Intent intent = new Intent(MainActivity.this, Display.class);
+                                if (success) {
+                                    String username = jsonResponse.getString("username");
+                                    String password = jsonResponse.getString("password");
+                                    String gender = jsonResponse.getString("gender");
+                                    String email = jsonResponse.getString("email");
 
-                                //pass some data using putExtra()
-                                intent.putExtra("username", username);
+                                    Context context = getApplicationContext();
+                                    CharSequence text = "Login Successfully!";
+                                    int duration = Toast.LENGTH_SHORT;
+
+                                    Toast toast = Toast.makeText(context, text, duration);
+                                    toast.show();
+
+                                    //go to another activity
+                                    Intent intent = new Intent(MainActivity.this, Display.class);
+
+                                    //pass some data using putExtra()
+                                    intent.putExtra("username", username);
 
 //                                intentToNav.putExtra("name", name);
 //                                intentToNav.putExtra("username", username);
@@ -69,32 +80,48 @@ public class MainActivity extends AppCompatActivity {
 //                                intentToNav.putExtra("password", password);
 //                                intentToNav.putExtra("userType", userType);
 
-                                //optional
-                                progressDialog.dismiss();
+                                    //optional
+                                    progressDialog.dismiss();
 
-                                MainActivity.this.startActivity(intent);
-                            } else {
-                                //optional
-                                progressDialog.dismiss();
+                                    MainActivity.this.startActivity(intent);
+                                } else {
+                                    //optional
+                                    progressDialog.dismiss();
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                builder.setMessage("Login failed")
-                                        .setNegativeButton("Retry", null)
-                                        .create()
-                                        .show();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                    builder.setMessage("Login failed")
+                                            .setNegativeButton("Retry", null)
+                                            .create()
+                                            .show();
+                                }
+                            }
+                            catch(JSONException e){
+                                e.printStackTrace();
                             }
                         }
-                        catch(JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
 
-                };
-                LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                queue.add(loginRequest);
+                    };
+                    LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                    queue.add(loginRequest);
+                }
             }
         });
 
+    }
+
+    public boolean validate(){
+        String username = editText_username.getText().toString();
+        String password = editText_password.getText().toString();
+        boolean valid = true;
+        if(username.isEmpty()){
+            valid = false;
+            editText_username.setError("username can't be empty");
+        }
+        if(password.isEmpty()){
+            valid = false;
+            editText_password.setError("password field can't be empty");
+        }
+        return valid;
     }
 }

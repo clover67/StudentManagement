@@ -20,20 +20,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class add_user extends AppCompatActivity {
-    //widget GUI
-    RadioGroup rgGender;
-    Button button_signup;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
 
-        // Init Widget GUI
-        rgGender = (RadioGroup) findViewById(R.id.rgGender);
-        button_signup = (Button) findViewById(R.id.button_signup);
 
+        final EditText etName = (EditText) findViewById(R.id.txtName);
+        final EditText etUsername = (EditText) findViewById(R.id.txtUsername);
+        final EditText etPassword = (EditText) findViewById(R.id.txtPassword);
+        final EditText etEmail = (EditText) findViewById(R.id.txtEmail);
+        final RadioGroup rgGender = (RadioGroup) findViewById(R.id.rgGender);
         final Button bBack = (Button) findViewById(R.id.button_back);
+        final Button button_signup = (Button) findViewById(R.id.button_signup);
 
         bBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,28 +45,21 @@ public class add_user extends AppCompatActivity {
         button_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //get value from textview
-                // Get Selected Radio Button and display output
-                RadioButton selectRadio = (RadioButton) findViewById(rgGender
-                        .getCheckedRadioButtonId());
-
-                EditText etName = (EditText)findViewById(R.id.txtName);
-                EditText etUsername = (EditText)findViewById(R.id.txtUsername);
-                EditText etPassword = (EditText)findViewById(R.id.txtPassword);
-                EditText etEmail = (EditText)findViewById(R.id.txtEmail);
-
-                String name = etName.getText().toString();
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                String gender = selectRadio.getText().toString();
-                String email = etEmail.getText().toString();
 
                 //optional
-//                final ProgressDialog progressDialog = new ProgressDialog(add_user.this);
-//                progressDialog.setMessage("Signing up...");
-//                progressDialog.setCancelable(false);
-//                progressDialog.show();
+                final ProgressDialog progressDialog = new ProgressDialog(add_user.this);
+                progressDialog.setMessage("Signing up...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 //optional
+
+                final RadioButton selectRadio = (RadioButton) findViewById(rgGender.getCheckedRadioButtonId());
+
+                final String name = etName.getText().toString();
+                final String username = etUsername.getText().toString();
+                final String password = etPassword.getText().toString();
+                final String gender = selectRadio.getText().toString();
+                final String email = etEmail.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -77,15 +69,14 @@ public class add_user extends AppCompatActivity {
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
+                                progressDialog.dismiss();
                                 //go to another activity
                                 Intent intent = new Intent(add_user.this, Display.class);
                                 //optional
-//                                progressDialog.dismiss();
-
                                 add_user.this.startActivity(intent);
                             } else {
                                 //optional
-//                                progressDialog.dismiss();
+                                progressDialog.dismiss();
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(add_user.this);
                                 builder.setMessage("Signup failed")
@@ -93,33 +84,16 @@ public class add_user extends AppCompatActivity {
                                         .create()
                                         .show();
                             }
-                        }
-                        catch(JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
 
                 };
-                SignUpRequest signUpRequest = new SignUpRequest(name,username,password,gender,email, responseListener);
+                SignUpRequest signUpRequest = new SignUpRequest(name, username, password, gender, email, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(add_user.this);
                 queue.add(signUpRequest);
             }
         });
     }
-
-//    public void onClick(View v) {
-//        // TODO Auto-generated method stub
-//
-//        if (v == button_signup) {
-//
-//            // Get Selected Radio Button and display output
-//            RadioButton selectRadio = (RadioButton) findViewById(rgGender
-//                    .getCheckedRadioButtonId());
-//            String opinion = selectRadio.getText().toString();
-//
-//            Toast.makeText(this, "Your Opinion is : " + opinion,
-//                    Toast.LENGTH_LONG).show();
-//
-//        }
-//    }
 }

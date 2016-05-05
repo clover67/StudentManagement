@@ -13,7 +13,7 @@ public class SignUpRequest extends StringRequest {
     private static final String SIGNUP_REQUEST_URL = "http://clover.comli.com/SignUp.php";
     private Map<String, String> params;
 
-    public SignUpRequest(String name,String username, String password,String gender, String email,  Response.Listener<String> listener){
+    public SignUpRequest(String name, String username, String password, String gender, String email,  Response.Listener<String> listener){
         super(Method.POST, SIGNUP_REQUEST_URL, listener, null);
         params  = new HashMap<>();
         params.put("name", name);

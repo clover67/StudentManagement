@@ -87,14 +87,14 @@
             android:text="Female"
             android:id="@+id/rbFemale"
             android:checked="false"
-            android:layout_alignTop="@+id/rbMale"
+            android:layout_alignTop="@+id/rbSMale"
             android:layout_toEndOf="@+id/textView4" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Male"
-            android:id="@+id/rbMale"
+            android:id="@+id/rbSMale"
             android:checked="false"
             android:layout_below="@+id/editText4"
             android:layout_toEndOf="@+id/textView6" />

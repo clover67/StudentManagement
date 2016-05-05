@@ -25,6 +25,7 @@ public class Display extends AppCompatActivity {
         final Button bAdduser = (Button) findViewById(R.id.button_adduser);
         final Button bManage = (Button) findViewById(R.id.button_manage);
         final Button bSearch = (Button) findViewById(R.id.button_search);
+        final Button bLogOut = (Button) findViewById(R.id.button_logout);
 
         bAdduser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,8 +33,32 @@ public class Display extends AppCompatActivity {
                 Intent intent = new Intent(Display.this, add_user.class);
                 Display.this.startActivity(intent);
             }
-         });
+        });
 
+        bManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Display.this, ManagePage.class);
+                Display.this.startActivity(intent);
+            }
+        });
+
+        bSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Display.this, SearchPage.class);
+                Display.this.startActivity(intent);
+            }
+        });
+
+        bLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(Display.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
     }
 }
