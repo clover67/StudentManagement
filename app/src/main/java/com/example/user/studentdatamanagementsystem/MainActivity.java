@@ -3,6 +3,7 @@ package com.example.user.studentdatamanagementsystem;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,10 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
      EditText editText_password;
      EditText editText_username;
+
+    // User name (make variable public to access from outside)
+    public static final String KEY_NAME = "username";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         editText_password = (EditText) findViewById(R.id.editText_password);
         editText_username = (EditText) findViewById(R.id.editText_username);
         final Button bLogin = (Button) findViewById(R.id.buttonLogin);
+
+        final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        final SharedPreferences.Editor editor = pref.edit();
+
+
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
                                     String password = jsonResponse.getString("password");
                                     String gender = jsonResponse.getString("gender");
                                     String email = jsonResponse.getString("email");
+
+
+                                    // Storing name in pref
+                                    editor.putString(KEY_NAME, username);
+
+                                    // commit changes
+                                    editor.commit();
 
                                     Context context = getApplicationContext();
                                     CharSequence text = "Login Successfully!";
