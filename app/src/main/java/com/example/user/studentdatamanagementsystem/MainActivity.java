@@ -1,12 +1,15 @@
 package com.example.user.studentdatamanagementsystem;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,9 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 if (success) {
                                     String username = jsonResponse.getString("username");
-                                    String password = jsonResponse.getString("password");
-                                    String gender = jsonResponse.getString("gender");
-                                    String email = jsonResponse.getString("email");
+
 
 
                                     // Storing name in pref
@@ -77,15 +78,15 @@ public class MainActivity extends AppCompatActivity {
                                     // commit changes
                                     editor.commit();
 
-                                    Context context = getApplicationContext();
-                                    CharSequence text = "Login Successfully!";
-                                    int duration = Toast.LENGTH_SHORT;
+//                                    Context context = getApplicationContext();
+//                                    CharSequence text = "Login Successfully!";
+//                                    int duration = Toast.LENGTH_SHORT;
 
-                                    Toast toast = Toast.makeText(context, text, duration);
-                                    toast.show();
+//                                    Toast toast = Toast.makeText(context, text, duration);
+//                                    toast.show();
 
                                     //go to another activity
-                                    Intent intent = new Intent(MainActivity.this, Display.class);
+                                    final Intent intent = new Intent(MainActivity.this, Display.class);
 
                                     //pass some data using putExtra()
                                     intent.putExtra("username", username);
@@ -100,7 +101,19 @@ public class MainActivity extends AppCompatActivity {
                                     //optional
                                     progressDialog.dismiss();
 
-                                    MainActivity.this.startActivity(intent);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                    builder.setMessage("Login sucessfully")
+                                            .setPositiveButton("Okay", new Dialog.OnClickListener(){
+                                                @Override public void onClick(    DialogInterface dialog,    int which){
+
+                                                    MainActivity.this.startActivity(intent);
+                                                }
+
+                                    });
+                                            builder.create()
+                                            .show();
+
+
                                 } else {
                                     //optional
                                     progressDialog.dismiss();
@@ -133,11 +146,18 @@ public class MainActivity extends AppCompatActivity {
         boolean valid = true;
         if(username.isEmpty()){
             valid = false;
-            editText_username.setError("username can't be empty");
+            editText_username.setError("Username can't be empty");
         }
         if(password.isEmpty()){
             valid = false;
-            editText_password.setError("password field can't be empty");
+            editText_password.setError("Password field can't be empty");
+        }
+
+        if(password.length() < 6)
+        {
+            valid = false;
+            editText_password.setError("Password must at least 6 characters");
+
         }
         return valid;
     }
