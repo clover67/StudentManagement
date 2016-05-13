@@ -1,8 +1,11 @@
 package com.example.user.studentdatamanagementsystem;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -62,9 +65,27 @@ public class Display extends AppCompatActivity {
         bLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(Display.this, MainActivity.class);
+                final Intent intent  = new Intent(Display.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Display.this);
+                builder.setMessage("Are you sure want to logout?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new Dialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                startActivity(intent);
+                            }
+
+                        })
+                        .setNegativeButton("No", new Dialog.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                });
+                builder.create()
+                        .show();
 
 
             }
