@@ -8,47 +8,52 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Usermame here"
+        android:text="Username here"
         android:id="@+id/TVusername" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="30dp"
         android:textSize="20sp"
         android:layout_margin="10dp"
         android:text="Add User"
         android:id="@+id/button_adduser"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:background="#78befc" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="30dp"
         android:textSize="20sp"
         android:layout_margin="10dp"
         android:text="Manage Student Data"
         android:id="@+id/button_manage"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#78befc" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="30dp"
         android:textSize="20sp"
         android:layout_margin="10dp"
         android:text="Search Student Data"
         android:id="@+id/button_search"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#78befc" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Log Out"
         android:padding="30dp"
+        android:background="#f77373"
         android:textSize="20sp"
         android:layout_margin="10dp"
         android:id="@+id/button_logout"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff" />
 
 </LinearLayout>
