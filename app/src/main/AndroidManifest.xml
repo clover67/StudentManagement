@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/peopleicon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -19,11 +19,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Display" />
-        <activity android:name=".add_user" />
-        <activity android:name=".ManagePage" />
+        <activity android:name=".Display"
+                   android:label="Main Menu"/>
+        <activity android:name=".add_user"
+                    android:label="Add New User"/>
+        <activity android:name=".ManagePage"
+            android:label="Manage Student Data"/>
         <activity android:name=".SearchPage" />
-        <activity android:name=".AddStudent"></activity>
+        <activity android:name=".AddStudent"
+            android:label="Add New Student"></activity>
     </application>
 
 </manifest>

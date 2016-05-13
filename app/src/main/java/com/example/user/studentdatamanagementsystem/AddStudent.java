@@ -194,6 +194,8 @@ public class AddStudent extends AppCompatActivity {
 
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String idPattern ="^([B]+[0-9+]+)$";
+        String ICPattern ="\\d{6}[\\-]\\d{2}[\\-]\\d{4}";
+        String TelPattern ="\\d{3}[\\-]\\d{7}";
 
 
         boolean valid = true;
@@ -213,9 +215,9 @@ public class AddStudent extends AppCompatActivity {
         {
             etsName.setError(null);
         }
-        if(sIC.length() > 12){
+        if(!sIC.matches(ICPattern)){
             valid = false;
-            etsIC.setError("Format: 980201025421");
+            etsIC.setError("Format: 980201-02-5421");
         }
         else
         {
@@ -241,9 +243,9 @@ public class AddStudent extends AppCompatActivity {
         {
             etsDate.setError(null);
         }
-        if(sTel.length() > 10){
+        if(!sTel.matches(TelPattern)){
             valid = false;
-            etsTel.setError("Format: 0123456789");
+            etsTel.setError("Format: 012-3456789");
         }
         else
         {
