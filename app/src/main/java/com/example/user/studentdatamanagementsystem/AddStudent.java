@@ -1,8 +1,10 @@
 package com.example.user.studentdatamanagementsystem;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,20 +33,32 @@ public class AddStudent extends AppCompatActivity {
 
     EditText setDate;
     Calendar myCalendar;
+    EditText etsID;
+    EditText etsName;
+    EditText etsIC;
+    RadioGroup rbsGender;
+    RadioButton selectRadio;
+    RadioGroup rbsFaculty;
+    RadioButton selectRadioF;
+    RadioGroup rbsRace;
+    RadioButton selectRadioR;
+    EditText etsDate;
+    EditText etsTel;
+    EditText etsEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
 
-        final EditText etsID = (EditText) findViewById(R.id.etID);
-        final EditText etsName = (EditText) findViewById(R.id.etName);
-        final EditText etsIC = (EditText) findViewById(R.id.etIC);
-        final RadioGroup rbsGender = (RadioGroup) findViewById(R.id.rbGender);
-        final RadioGroup rbsFaculty = (RadioGroup) findViewById(R.id.rbFaculty);
-        final RadioGroup rbsRace = (RadioGroup) findViewById(R.id.rbRace);
-        final EditText etsDate = (EditText) findViewById(R.id.etDate);
-        final EditText etsTel = (EditText) findViewById(R.id.etTel);
-        final EditText etsEmail = (EditText) findViewById(R.id.etEmail);
+        etsID = (EditText) findViewById(R.id.etID);
+        etsName = (EditText) findViewById(R.id.etName);
+        etsIC = (EditText) findViewById(R.id.etIC);
+        rbsGender = (RadioGroup) findViewById(R.id.rbGender);
+        rbsFaculty = (RadioGroup) findViewById(R.id.rbFaculty);
+        rbsRace = (RadioGroup) findViewById(R.id.rbRace);
+        etsDate = (EditText) findViewById(R.id.etDate);
+        etsTel = (EditText) findViewById(R.id.etTel);
+        etsEmail = (EditText) findViewById(R.id.etEmail);
         final Button btnAddCancel = (Button) findViewById(R.id.btnAddCancel);
         final Button btnAddSave = (Button) findViewById(R.id.btnAddSave);
 
@@ -59,66 +73,71 @@ public class AddStudent extends AppCompatActivity {
         btnAddSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (validate()) {
+                    //optional
+                    final ProgressDialog progressDialog = new ProgressDialog(AddStudent.this);
+                    progressDialog.setMessage("Saving...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    //optional
 
-                //optional
-                final ProgressDialog progressDialog = new ProgressDialog(AddStudent.this);
-                progressDialog.setMessage("Saving...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-                //optional
+                    selectRadio = (RadioButton) findViewById(rbsGender.getCheckedRadioButtonId());
+                    selectRadioF = (RadioButton) findViewById(rbsFaculty.getCheckedRadioButtonId());
+                    selectRadioR = (RadioButton) findViewById(rbsRace.getCheckedRadioButtonId());
 
-                final RadioButton selectRadio = (RadioButton) findViewById(rbsGender.getCheckedRadioButtonId());
-                final RadioButton selectRadioF = (RadioButton) findViewById(rbsFaculty.getCheckedRadioButtonId());
-                final RadioButton selectRadioR = (RadioButton) findViewById(rbsRace.getCheckedRadioButtonId());
+                    final String sID = etsID.getText().toString();
+                    final String sName = etsName.getText().toString();
+                    final String sIC = etsIC.getText().toString();
+                    final String sGender = selectRadio.getText().toString();
+                    final String sFaculty = selectRadioF.getText().toString();
+                    final String sRace = selectRadioR.getText().toString();
+                    final String sDate = etsDate.getText().toString();
+                    final String sTel = etsTel.getText().toString();
+                    final String sEmail = etsEmail.getText().toString();
 
-                final String sID = etsID.getText().toString();
-                final String sName = etsName.getText().toString();
-                final String sIC = etsIC.getText().toString();
-                final String sGender = selectRadio.getText().toString();
-                final String sFaculty = selectRadioF.getText().toString();
-                final String sRace = selectRadioR.getText().toString();
-                final String sDate = etsDate.getText().toString();
-                final String sTel = etsTel.getText().toString();
-                final String sEmail = etsEmail.getText().toString();
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
+                                if (success) {
+                                    progressDialog.dismiss();
+                                    //go to another activity
+                                    final Intent intent = new Intent(AddStudent.this, Display.class);
 
-                            if (success) {
-                                progressDialog.dismiss();
-                                Context context = getApplicationContext();
-                                CharSequence text = "Save Successfully!";
-                                int duration = Toast.LENGTH_SHORT;
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(AddStudent.this);
+                                    builder.setMessage("Save sucessfully")
+                                            .setPositiveButton("Okay", new Dialog.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
 
-                                Toast toast = Toast.makeText(context, text, duration);
-                                toast.show();
-                                //go to another activity
-                                Intent intent = new Intent(AddStudent.this, ManagePage.class);
-                                //optional
-                                AddStudent.this.startActivity(intent);
-                            } else {
-                                //optional
-                                progressDialog.dismiss();
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(AddStudent.this);
-                                builder.setMessage("Save failed")
-                                        .setNegativeButton("Retry", null)
-                                        .create()
-                                        .show();
+                                                    AddStudent.this.startActivity(intent);
+                                                }
+                                            });
+                                    builder.create()
+                                            .show();
+                                } else {
+                                    //optional
+                                    progressDialog.dismiss();
+                                    String errorMessage = jsonResponse.getString("errorMessage");
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(AddStudent.this);
+                                    builder.setMessage(errorMessage)
+                                            .setNegativeButton("Retry", null)
+                                            .create()
+                                            .show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
 
-                };
-                AddStudentRequest addStudentRequest = new AddStudentRequest(sID,sName, sIC, sGender,sFaculty,sRace,sDate,sTel, sEmail, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(AddStudent.this);
-                queue.add(addStudentRequest);
+                    };
+                    AddStudentRequest addStudentRequest = new AddStudentRequest(sID, sName, sIC, sGender, sFaculty, sRace, sDate, sTel, sEmail, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(AddStudent.this);
+                    queue.add(addStudentRequest);
+                }
             }
         });
 
@@ -157,6 +176,88 @@ public class AddStudent extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         setDate.setText(sdf.format(myCalendar.getTime()));
+    }
+    public boolean validate(){
+        rbsGender = (RadioGroup) findViewById(R.id.rbGender);
+        rbsFaculty = (RadioGroup) findViewById(R.id.rbFaculty);
+        rbsRace = (RadioGroup) findViewById(R.id.rbRace);
+        String sID = etsID.getText().toString();
+        String sName = etsName.getText().toString();
+        String sIC = etsIC.getText().toString();
+//        String sGender = selectRadio.getText().toString();
+//        String sFaculty = selectRadioF.getText().toString();
+//        String sRace = selectRadioR.getText().toString();
+        String sDate = etsDate.getText().toString();
+        String sTel = etsTel.getText().toString();
+         String sEmail = etsEmail.getText().toString();
+
+
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String idPattern ="^([B]+[0-9+]+)$";
+
+
+        boolean valid = true;
+        if(!sID.matches(idPattern)){
+            valid = false;
+            etsID.setError("Format: B031410111");
+        }
+        else
+        {
+            etsID.setError(null);
+        }
+        if(sName.isEmpty()){
+            valid = false;
+            etsName.setError("Name can't be empty");
+        }
+        else
+        {
+            etsName.setError(null);
+        }
+        if(sIC.length() > 12){
+            valid = false;
+            etsIC.setError("Format: 980201025421");
+        }
+        else
+        {
+            etsIC.setError(null);
+        }
+        if(rbsGender.getCheckedRadioButtonId()== -1){
+            valid = false;
+            Toast.makeText(getApplicationContext(), "Please select Gender", Toast.LENGTH_SHORT).show();
+        }
+        if(rbsFaculty.getCheckedRadioButtonId()== -1){
+            valid = false;
+            Toast.makeText(getApplicationContext(), "Please select Faculty", Toast.LENGTH_SHORT).show();
+        }
+        if(rbsRace.getCheckedRadioButtonId()== -1){
+            valid = false;
+            Toast.makeText(getApplicationContext(), "Please select Race", Toast.LENGTH_SHORT).show();
+        }
+        if(sDate.isEmpty()){
+            valid = false;
+            etsDate.setError("Date of Birth can't be empty");
+        }
+        else
+        {
+            etsDate.setError(null);
+        }
+        if(sTel.length() > 10){
+            valid = false;
+            etsTel.setError("Format: 0123456789");
+        }
+        else
+        {
+            etsTel.setError(null);
+        }
+        if(sEmail.isEmpty()||!sEmail.matches(emailPattern)){
+            valid = false;
+            etsEmail.setError("Invalid Email Address");
+        }
+        else
+        {
+            etsEmail.setError(null);
+        }
+        return valid;
     }
 
 
