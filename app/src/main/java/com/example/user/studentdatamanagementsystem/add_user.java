@@ -132,13 +132,13 @@ public class add_user extends AppCompatActivity {
 //       final String gender = selectRadio.getText().toString();
          String email = etEmail.getText().toString();
 
-
+        String namePattern = "[a-zA-Z ]+";
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         boolean valid = true;
-        if(name.isEmpty()){
+        if(name.isEmpty()||!name.matches(namePattern)){
             valid = false;
-            etName.setError("Name can't be empty");
+            etName.setError("Invalid Full Name");
         }
         else
         {

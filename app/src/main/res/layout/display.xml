@@ -17,7 +17,7 @@
         android:padding="30dp"
         android:textSize="20sp"
         android:layout_margin="10dp"
-        android:text="Add User"
+        android:text="Add Admin"
         android:id="@+id/button_adduser"
         android:layout_gravity="center_horizontal"
         android:background="#78befc" />

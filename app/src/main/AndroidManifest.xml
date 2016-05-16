@@ -22,7 +22,7 @@
         <activity android:name=".Display"
                    android:label="Main Menu"/>
         <activity android:name=".add_user"
-                    android:label="Add New User"/>
+                    android:label="Add New Admin"/>
         <activity android:name=".ManagePage"
             android:label="Manage Student Data"/>
         <activity android:name=".SearchPage" />

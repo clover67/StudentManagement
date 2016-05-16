@@ -160,9 +160,12 @@ public class AddStudent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(AddStudent.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//                new DatePickerDialog(AddStudent.this, date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddStudent.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                datePickerDialog.show();
             }
         });
 
@@ -191,7 +194,7 @@ public class AddStudent extends AppCompatActivity {
         String sTel = etsTel.getText().toString();
          String sEmail = etsEmail.getText().toString();
 
-
+        String namePattern = "[a-zA-Z ]+";
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String idPattern ="^([B]+[0-9+]+)$";
         String ICPattern ="\\d{6}[\\-]\\d{2}[\\-]\\d{4}";
@@ -207,9 +210,9 @@ public class AddStudent extends AppCompatActivity {
         {
             etsID.setError(null);
         }
-        if(sName.isEmpty()){
+        if(sName.isEmpty()||!sName.matches(namePattern)){
             valid = false;
-            etsName.setError("Name can't be empty");
+            etsName.setError("Invalid Full Name");
         }
         else
         {
