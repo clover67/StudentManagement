@@ -29,6 +29,22 @@ public class ManagePage extends AppCompatActivity {
             }
         });
 
+        bUpdateStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManagePage.this, SearchStudent.class);
+                ManagePage.this.startActivity(intent);
+            }
+        });
+
+        bDeleteStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManagePage.this, SearchDelete.class);
+                ManagePage.this.startActivity(intent);
+            }
+        });
+
         bMBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

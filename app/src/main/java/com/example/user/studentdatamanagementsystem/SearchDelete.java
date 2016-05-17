@@ -3,6 +3,7 @@ package com.example.user.studentdatamanagementsystem;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,29 +19,34 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SearchPage extends AppCompatActivity {
+public class SearchDelete extends AppCompatActivity {
 
-    EditText etSearch;
+    EditText etSearchDelete;
+
+    // User name (make variable public to access from outside)
+    public static final String KEY_SID = "sID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_page);
+        setContentView(R.layout.activity_search_delete);
 
-        etSearch = (EditText) findViewById(R.id.etSearch);
-        final Button btnSearch = (Button) findViewById(R.id.btnSearch);
+        etSearchDelete = (EditText) findViewById(R.id.etSearchDelete);
+        final Button btnSearch = (Button) findViewById(R.id.btnSearchDelete);
 
+        final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        final SharedPreferences.Editor editor = pref.edit();
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 //convert to string
-                final String sID = etSearch.getText().toString();
+                final String sID = etSearchDelete.getText().toString();
 
-                if(validate()){
+                if (validate1()) {
                     //optional
-                    final ProgressDialog progressDialog = new ProgressDialog(SearchPage.this);
+                    final ProgressDialog progressDialog = new ProgressDialog(SearchDelete.this);
                     progressDialog.setMessage("Loading...");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -64,6 +70,11 @@ public class SearchPage extends AppCompatActivity {
                                     String sTelNo = jsonResponse.getString("sTelNo");
                                     String sEmail = jsonResponse.getString("sEmail");
 
+                                    // Storing name in pref
+                                    editor.putString(KEY_SID, sID);
+
+                                    // commit changes
+                                    editor.commit();
 
                                     Context context = getApplicationContext();
                                     CharSequence text = "Student Info found!";
@@ -73,7 +84,7 @@ public class SearchPage extends AppCompatActivity {
                                     toast.show();
 
                                     //go to another activity
-                                    Intent intent = new Intent(SearchPage.this, DataList.class);
+                                    Intent intent = new Intent(SearchDelete.this, DeleteStudent.class);
 
                                     //pass some data using putExtra()
                                     intent.putExtra("sID", sID);
@@ -84,24 +95,23 @@ public class SearchPage extends AppCompatActivity {
                                     intent.putExtra("sRace", sRace);
                                     intent.putExtra("sDOB", sDOB);
                                     intent.putExtra("sTelNo", sTelNo);
-                                    intent.putExtra("sEmail",sEmail);
+                                    intent.putExtra("sEmail", sEmail);
 
                                     //optional
                                     progressDialog.dismiss();
 
-                                    SearchPage.this.startActivity(intent);
+                                    SearchDelete.this.startActivity(intent);
                                 } else {
                                     //optional
                                     progressDialog.dismiss();
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(SearchDelete.this);
                                     builder.setMessage("Invalid Student ID!")
                                             .setNegativeButton("Retry", null)
                                             .create()
                                             .show();
                                 }
-                            }
-                            catch(JSONException e){
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -110,7 +120,7 @@ public class SearchPage extends AppCompatActivity {
 
 
                     SearchPageRequest searchPageRequest = new SearchPageRequest(sID, responseListener);
-                    RequestQueue queue = Volley.newRequestQueue(SearchPage.this);
+                    RequestQueue queue = Volley.newRequestQueue(SearchDelete.this);
                     queue.add(searchPageRequest);
 
                 }
@@ -120,22 +130,25 @@ public class SearchPage extends AppCompatActivity {
         });
     }
 
-    public boolean validate(){
-        String sID = etSearch.getText().toString();
+    public boolean validate1() {
+        String sID = etSearchDelete.getText().toString();
+
+        boolean valid = true;
 
         String idPattern = "^([B]+[0-9+]+)$";
 
-        boolean valid = true;
+
         if (!sID.matches(idPattern)) {
             valid = false;
-            etSearch.setError("Format: B031410111");
+            etSearchDelete.setError("Format: B031410111");
         } else {
-            etSearch.setError(null);
+            etSearchDelete.setError(null);
         }
 
-        if(sID.isEmpty()){
+
+        if (sID.isEmpty()) {
             valid = false;
-            etSearch.setError("Please insert a Student ID.");
+            etSearchDelete.setError("Please insert a Student ID.");
         }
         return valid;
     }

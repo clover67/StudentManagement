@@ -19,15 +19,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Display"
-                   android:label="Main Menu"/>
-        <activity android:name=".add_user"
-                    android:label="Add New Admin"/>
-        <activity android:name=".ManagePage"
-            android:label="Manage Student Data"/>
-        <activity android:name=".SearchPage" />
-        <activity android:name=".AddStudent"
-            android:label="Add New Student"></activity>
+        <activity
+            android:name=".Display"
+            android:label="Main Menu" />
+        <activity
+            android:name=".add_user"
+            android:label="Add New Admin" />
+        <activity
+            android:name=".ManagePage"
+            android:label="Manage Student Data" />
+        <activity
+            android:name=".AddStudent"
+            android:label="Add New Student" />
+        <activity android:name=".SearchDelete"
+            android:label="Search Student Data"/>
+        <activity android:name=".UpdateStudent"
+            android:label="Update Student Data"/>
+        <activity android:name=".SearchStudent"
+            android:label="Search Student Data"/>
+        <activity android:name=".SearchPage"
+            android:label="Search Student Data"/>
+        <activity android:name=".DataList"
+            android:label="Student Data"/>
+        <activity android:name=".DeleteStudent"
+            android:label="Delete Student Data" ></activity>
     </application>
 
 </manifest>

@@ -7,12 +7,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.user.studentdatamanagementsystem.SearchPage">
+    tools:context="com.example.user.studentdatamanagementsystem.SearchDelete">
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etSearch"
+        android:id="@+id/etSearchDelete"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Search"
-        android:id="@+id/btnSearch"
-        android:layout_below="@+id/etSearch"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/btnSearchDelete"
+        android:layout_below="@+id/etSearchDelete"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

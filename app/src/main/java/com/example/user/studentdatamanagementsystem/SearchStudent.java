@@ -18,16 +18,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SearchPage extends AppCompatActivity {
+public class SearchStudent extends AppCompatActivity {
 
-    EditText etSearch;
+    EditText etSearchID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_page);
+        setContentView(R.layout.activity_search_student);
 
-        etSearch = (EditText) findViewById(R.id.etSearch);
+        etSearchID = (EditText) findViewById(R.id.etSearchID);
         final Button btnSearch = (Button) findViewById(R.id.btnSearch);
 
 
@@ -36,11 +36,11 @@ public class SearchPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //convert to string
-                final String sID = etSearch.getText().toString();
+                final String sID = etSearchID.getText().toString();
 
-                if(validate()){
+                if (validate()) {
                     //optional
-                    final ProgressDialog progressDialog = new ProgressDialog(SearchPage.this);
+                    final ProgressDialog progressDialog = new ProgressDialog(SearchStudent.this);
                     progressDialog.setMessage("Loading...");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -73,7 +73,7 @@ public class SearchPage extends AppCompatActivity {
                                     toast.show();
 
                                     //go to another activity
-                                    Intent intent = new Intent(SearchPage.this, DataList.class);
+                                    Intent intent = new Intent(SearchStudent.this, UpdateStudent.class);
 
                                     //pass some data using putExtra()
                                     intent.putExtra("sID", sID);
@@ -84,33 +84,31 @@ public class SearchPage extends AppCompatActivity {
                                     intent.putExtra("sRace", sRace);
                                     intent.putExtra("sDOB", sDOB);
                                     intent.putExtra("sTelNo", sTelNo);
-                                    intent.putExtra("sEmail",sEmail);
+                                    intent.putExtra("sEmail", sEmail);
 
                                     //optional
                                     progressDialog.dismiss();
 
-                                    SearchPage.this.startActivity(intent);
+                                    SearchStudent.this.startActivity(intent);
                                 } else {
                                     //optional
                                     progressDialog.dismiss();
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(SearchStudent.this);
                                     builder.setMessage("Invalid Student ID!")
                                             .setNegativeButton("Retry", null)
                                             .create()
                                             .show();
                                 }
-                            }
-                            catch(JSONException e){
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
 
                     };
 
-
                     SearchPageRequest searchPageRequest = new SearchPageRequest(sID, responseListener);
-                    RequestQueue queue = Volley.newRequestQueue(SearchPage.this);
+                    RequestQueue queue = Volley.newRequestQueue(SearchStudent.this);
                     queue.add(searchPageRequest);
 
                 }
@@ -118,24 +116,26 @@ public class SearchPage extends AppCompatActivity {
             }
 
         });
+
     }
 
-    public boolean validate(){
-        String sID = etSearch.getText().toString();
+    public boolean validate() {
+        String sID = etSearchID.getText().toString();
 
         String idPattern = "^([B]+[0-9+]+)$";
 
         boolean valid = true;
         if (!sID.matches(idPattern)) {
             valid = false;
-            etSearch.setError("Format: B031410111");
+            etSearchID.setError("Format: B031410111");
         } else {
-            etSearch.setError(null);
+            etSearchID.setError(null);
         }
 
-        if(sID.isEmpty()){
+
+        if (sID.isEmpty()) {
             valid = false;
-            etSearch.setError("Please insert a Student ID.");
+            etSearchID.setError("Please insert a Student ID.");
         }
         return valid;
     }

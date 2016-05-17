@@ -87,7 +87,7 @@ public class add_user extends AppCompatActivity {
                                     final Intent intent = new Intent(add_user.this, Display.class);
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(add_user.this);
-                                    builder.setMessage("Sign Up sucessfully")
+                                    builder.setMessage("Sign Up successfully")
                                             .setPositiveButton("Okay", new Dialog.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
