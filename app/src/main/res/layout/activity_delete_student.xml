@@ -177,7 +177,9 @@
         android:text="Cancel"
         android:id="@+id/btnCancel"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="#0889fa"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="wrap_content"
@@ -185,6 +187,7 @@
         android:text="Delete"
         android:id="@+id/btnDelete"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/tvStudentInfo" />
+        android:layout_alignEnd="@+id/tvStudentInfo"
+        android:background="#78befc" />
 
 </RelativeLayout>

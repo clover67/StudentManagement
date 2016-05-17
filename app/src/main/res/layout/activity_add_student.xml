@@ -277,7 +277,8 @@
         android:text="Save"
         android:id="@+id/btnAddSave"
         android:layout_below="@+id/etEmail"
-        android:layout_toEndOf="@+id/tvRace" />
+        android:layout_toEndOf="@+id/tvRace"
+        android:background="#78befc" />
 
     <Button
         android:layout_width="wrap_content"
@@ -286,7 +287,9 @@
         android:id="@+id/btnAddCancel"
         android:layout_below="@+id/etEmail"
         android:layout_alignEnd="@+id/etEmail"
-        android:layout_marginEnd="62dp" />
+        android:layout_marginEnd="62dp"
+        android:background="#0889fa"
+        android:textColor="#ffffff" />
 
 
 </RelativeLayout>
