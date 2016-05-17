@@ -25,9 +25,10 @@
             android:layout_alignParentStart="true" />
 
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/etStuID"
             android:ems="20"
             android:layout_below="@+id/tvID"

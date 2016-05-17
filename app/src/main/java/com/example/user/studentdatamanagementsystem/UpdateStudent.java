@@ -35,7 +35,7 @@ public class UpdateStudent extends AppCompatActivity {
 
     EditText setDate;
     Calendar myCalendar;
-    EditText etID;
+    TextView etID;
     EditText etName;
     EditText etIC;
     RadioGroup rbsGender;
@@ -75,7 +75,7 @@ public class UpdateStudent extends AppCompatActivity {
         String sEmail = intent.getStringExtra("sEmail");
 
 
-        etID = (EditText) findViewById(R.id.etStuID);
+        etID = (TextView) findViewById(R.id.etStuID);
         etName = (EditText) findViewById(R.id.etName);
         etIC = (EditText) findViewById(R.id.etIC);
         rbsGender = (RadioGroup) findViewById(R.id.rbGender);
@@ -279,7 +279,7 @@ public class UpdateStudent extends AppCompatActivity {
         rbsGender = (RadioGroup) findViewById(R.id.rbGender);
         rbsFaculty = (RadioGroup) findViewById(R.id.rbFaculty);
         rbsRace = (RadioGroup) findViewById(R.id.rbRace);
-        String sID = etID.getText().toString();
+    //    String sID = etID.getText().toString();
         String sName = etName.getText().toString();
         String sIC = etIC.getText().toString();
 //        String sGender = selectRadio.getText().toString();
@@ -291,20 +291,20 @@ public class UpdateStudent extends AppCompatActivity {
 
         String namePattern = "[a-zA-Z ]+";
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        String idPattern ="^([B]+[0-9+]+)$";
+      //  String idPattern ="^([B]+[0-9+]+)$";
         String ICPattern ="\\d{6}[\\-]\\d{2}[\\-]\\d{4}";
         String TelPattern ="\\d{3}[\\-]\\d{7}";
 
 
         boolean valid = true;
-        if(!sID.matches(idPattern)){
-            valid = false;
-            etID.setError("Format: B031410111");
-        }
-        else
-        {
-            etID.setError(null);
-        }
+//        if(!sID.matches(idPattern)){
+//            valid = false;
+//            etID.setError("Format: B031410111");
+//        }
+//        else
+//        {
+//            etID.setError(null);
+//        }
         if(sName.isEmpty()||!sName.matches(namePattern)){
             valid = false;
             etName.setError("Invalid Full Name");
