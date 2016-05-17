@@ -68,7 +68,8 @@
             android:digits="0123456789-"
             android:ems="20"
             android:layout_below="@+id/tvIC"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:hint="e.g. 980201-02-5421" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -240,7 +241,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Tel No."
+            android:text="Mobile Phone No."
             android:id="@+id/tvTel"
             android:layout_below="@+id/etDate"
             android:layout_alignParentStart="true" />
@@ -253,7 +254,8 @@
             android:ems="20"
             android:id="@+id/etTel"
             android:layout_below="@+id/tvTel"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:hint="e.g. 012-3456789" />
 
         <TextView
             android:layout_width="wrap_content"
